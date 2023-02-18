@@ -3,6 +3,7 @@ const cors = require('cors')
 
 const ApiError = require('./app/api-error')
 const contactRouter = require('./app/routers/contact.router')
+const groupRouter = require('./app/routers/groups.router')
 
 const app = express()
 
@@ -10,6 +11,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/contacts', contactRouter)
+app.use('/api/groups', groupRouter)
 
 app.get("/", (req, res) => {
     res.json({
