@@ -16,4 +16,7 @@ router.route('/:id')
     .put(contacts.update)
     .delete(contacts.delete)
 
+router.route('/group/:groupId')
+    .get(contacts.findAllGroups)
+
 module.exports = router

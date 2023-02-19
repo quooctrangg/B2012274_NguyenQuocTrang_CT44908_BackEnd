@@ -94,3 +94,16 @@ exports.findAllFavorite = async (req, res, next) => {
         return next(new ApiError(500, 'An error occurred while retrieving favorite contact'))
     }
 }
+
+exports.findAllGroups = async (req, res, next) => {
+    try {
+        const contactService = new ContactService(MongoDB.client)
+        const document = await contactService.findByGroup(req.params.groupId)
+        if (!document) {
+            return next(new ApiError(404, "GroupId not found"))
+        }
+        return res.send(document)
+    } catch (error) {
+        return next(new ApiError(500, `Error retrieving group with id=${req.params.id}`))
+    }
+}

@@ -11,7 +11,8 @@ class ContactService {
             email: payload.email,
             address: payload.address,
             phone: payload.phone,
-            favorite: payload.favorite
+            favorite: payload.favorite,
+            groupId: payload.groupId
         }
 
         Object.keys(contact).forEach(key => {
@@ -23,7 +24,7 @@ class ContactService {
     async create(payload) {
         const contact = this.extractConactData(payload)
         const result = await this.Contact.findOneAndUpdate(
-            contact, { $set: { favorite: contact.favorite === true } }, { returnDocument: 'after', upsert: true }
+            contact, { $set: { favorite: contact.favorite === true, groupId: contact.groupId !== null ? contact.groupId : null } }, { returnDocument: 'after', upsert: true }
         )
         return result.value
     }
@@ -72,6 +73,10 @@ class ContactService {
 
     async findFavorite() {
         return await this.find({ favorite: true })
+    }
+
+    async findByGroup(groupId) {
+        return await this.find({ groupId: groupId })
     }
 }
 
