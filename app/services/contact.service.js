@@ -78,6 +78,12 @@ class ContactService {
     async findByGroup(groupId) {
         return await this.find({ groupId: groupId })
     }
+
+    async removeGroupId(groupId) {
+        const filter = { groupId: groupId }
+        const result = await this.Contact.updateMany(filter, { $set: { groupId: null } }, { returnDocument: 'after' })
+        return result
+    }
 }
 
 module.exports = ContactService

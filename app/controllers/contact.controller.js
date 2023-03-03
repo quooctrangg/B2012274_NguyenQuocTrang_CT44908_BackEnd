@@ -104,6 +104,17 @@ exports.findAllGroups = async (req, res, next) => {
         }
         return res.send(document)
     } catch (error) {
-        return next(new ApiError(500, `Error retrieving group with id=${req.params.id}`))
+        return next(new ApiError(500, `Error retrieving contact with groupId=${req.params.groupId}`))
+    }
+}
+
+exports.updateGroupId = async (req, res, next) => {
+    try {
+        const contactService = new ContactService(MongoDB.client)
+        const document = await contactService.removeGroupId(req.params.groupId)
+        if (!document) { return next(new ApiError(404, "GroupId not found")) }
+        return res.send(document)
+    } catch (error) {
+        return next(new ApiError(500, `Error retrieving contact with groupId=${req.params.groupId}`))
     }
 }
